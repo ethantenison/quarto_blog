@@ -7,6 +7,6 @@ categories: [news]
 
 Data science is my passion. To me it is a super power! But I know in order to be the best data scientist I can be, I need to document my progress and display my work to solidify my learning and be open to feedback. 
 
-![](thumbnail.jpg)
+![My Junior Data Scientist Maya](maya.jpg)
 
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+
