@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Tensor Tenison",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\nThis is a post with executable code.\n\n\n\n\n\n\nApr 26, 2022\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nnews\n\n\n\n\nData science is my passion. To me it is a super power! But I know in order to be the best data scientist I can be, I need to document my progress and display my work to solidify my learning and be open to feedback.\n\n\n\n\n\n\nApr 23, 2022\n\n\nEthan Tenison\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\ncode\n\n\nanalysis\n\n\n\n\n```{r setup, include = FALSE} library(tidyverse) library(janitor) library(kableExtra)\n\n\n\n\n\n\nApr 26, 2022\n\n\nEthan Tenison\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nnews\n\n\n\n\nData science is my passion. To me it is a super power! But I know in order to be the best data scientist I can be, I need to document my progress and display my work to solidify my learning and be open to feedback.\n\n\n\n\n\n\nApr 23, 2022\n\n\nEthan Tenison\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -26,5 +26,12 @@
     "title": "Welcome To My Blog",
     "section": "",
     "text": "My Junior Data Scientist Maya"
+  },
+  {
+    "objectID": "posts/feature_engineering/index.html",
+    "href": "posts/feature_engineering/index.html",
+    "title": "Feature Engineering",
+    "section": "",
+    "text": "Feature Engineering is the process of selecting, manipulating, and transforming your data into features, or variables, that are useful for machine learning. Whereas data cleaning is generally the process of subtracting irrelevant data, feature engineering is a process of addition, adding more relevant information to your data set.\nSimplification is a major part of feature engineering. Combining two or more variables can increase the speed and accuracy of our model. Just to conceptualize what that would look like, I’ve pulled data from the Ames Housing data set on Kaggle. It includes a variable for square footage and final sales prices.\n\n\n\n \n  \n    id \n    sq_ft \n    sale_price \n  \n \n\n  \n    1 \n    1710 \n    208500 \n  \n  \n    2 \n    1262 \n    181500 \n  \n  \n    3 \n    1786 \n    223500 \n  \n  \n    4 \n    1717 \n    140000 \n  \n  \n    5 \n    2198 \n    250000 \n  \n  \n    6 \n    1362 \n    143000 \n  \n\n\n\n\n\nIf we were in the neighborhood looking to buy a house, it would not be prudent to only consider the listing price. We would want to know how much we’re paying for each square foot. This sounds so simple, but feature engineering in this case involves just dividing sales price by square feet to identify the cheapest house.\n\n\n\n \n  \n    id \n    sq_ft \n    sale_price \n    cost_sqft \n  \n \n\n  \n    1 \n    1710 \n    208500 \n    121.92982 \n  \n  \n    2 \n    1262 \n    181500 \n    143.81933 \n  \n  \n    3 \n    1786 \n    223500 \n    125.13998 \n  \n  \n    4 \n    1717 \n    140000 \n    81.53757 \n  \n  \n    5 \n    2198 \n    250000 \n    113.73976 \n  \n  \n    6 \n    1362 \n    143000 \n    104.99266"
   }
 ]
