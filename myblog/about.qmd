@@ -1,0 +1,19 @@
+---
+title: "About Ethan"
+image: headshot.png
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/ethantenison
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/ethantenison/
+    - icon: github
+      text: Github
+      href: https://github.com/ethantenison
+
+---
+
+Ethan Tenison is a data scientist who is currently working with Sunthetics to bring machine learning to the chemical industry.
