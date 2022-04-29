@@ -10,20 +10,26 @@ image: "image.jpg"
 library(tidyverse)
 library(janitor)
 library(kableExtra)
+library(reticulate)
 
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+use_python("/usr/local/bin/python3")
 ```
 
 Improving ML models after they're already been built is fun and can lead to some immediate gratification. You might tweak the hyper parameters and cross validation to improve the generalizability of your model. You may switch out the algorithm itself. Lets say you move from using neural nets to gradient boosted trees to see if you can move the accuracy score even close to 99%. At a certain point though you won't be able to improve your model without over fitting. Often times, you need to take a step back and look at the raw data itself to see if new variables can be created from the old that lead to improvements. This is what's called feature engineering
 
 **Feature Engineering** is the process of selecting, manipulating, and transforming your data into features, or variables, that are useful for machine learning. Whereas data cleaning is generally the process of subtracting irrelevant data, feature engineering is a process of addition, adding more relevant information to your data set.
 
+### Simplification 
+
 Simplification is a major part of feature engineering. Combining two or more variables can increase the speed and accuracy of our model. Just to conceptualize what that would look like, I've pulled data from the [Ames Housing](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/) data set on Kaggle. It includes a variable for square footage and final sales prices.
 
 ```{r ames_housing}
 
-ames <- read_csv("posts/feature_engineering/house-prices-advanced-regression-techniques/train.csv") |> 
+ames_raw <- read_csv("posts/feature_engineering/house-prices-advanced-regression-techniques/train.csv")
+
+ames <- ames_raw |> 
   clean_names() |> 
   select(id, gr_liv_area, sale_price) |>
   rename(sq_ft = gr_liv_area) |>
@@ -33,7 +39,6 @@ ames |>
   kbl() |> 
   kable_styling()
 ```
-
 If we were in the neighborhood looking to buy a house, it would not be prudent to only consider the listing price. We would want to know how much we're paying for each square foot. This sounds so simple, but feature engineering in this case involves just dividing sales price by square feet to identify the cheapest house.
 
 ```{r cheapest}
@@ -47,3 +52,16 @@ ames_fe |>
   kable_styling() |> 
   row_spec(min, bold = T, color = "black", background = "yellow")
 ```
+
+In terms of ML feature learning is all about more accurately representing the relationship between your features.The [kaggle tutorial](https://www.kaggle.com/code/ryanholbrook/what-is-feature-engineering) on feature engineering has been really helpful understanding this through code. 
+
+```{python ml}
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import cross_val_score
+
+ames = r.ames_raw
+ames = ames.drop()
+
+```
+
