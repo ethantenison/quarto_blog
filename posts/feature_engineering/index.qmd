@@ -8,6 +8,7 @@ image: "image.jpg"
 
 ```{r setup, include = FALSE}
 library(tidyverse)
+library(scales)
 library(janitor)
 library(kableExtra)
 library(reticulate)
@@ -21,7 +22,7 @@ Improving ML models after they're already been built is fun and can lead to some
 
 **Feature Engineering** is the process of selecting, manipulating, and transforming your data into features, or variables, that are useful for machine learning. Whereas data cleaning is generally the process of subtracting irrelevant data, feature engineering is a process of addition, adding more relevant information to your data set.
 
-### Simplification 
+### Simplification
 
 Simplification is a major part of feature engineering. Combining two or more variables can increase the speed and accuracy of our model. Just to conceptualize what that would look like, I've pulled data from the [Ames Housing](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/) data set on Kaggle. It includes a variable for square footage and final sales prices.
 
@@ -32,36 +33,114 @@ ames_raw <- read_csv("posts/feature_engineering/house-prices-advanced-regression
 ames <- ames_raw |> 
   clean_names() |> 
   select(id, gr_liv_area, sale_price) |>
-  rename(sq_ft = gr_liv_area) |>
-  head(6)
+  rename(sq_ft = gr_liv_area)
 
 ames |> 
   kbl() |> 
   kable_styling()
 ```
-If we were in the neighborhood looking to buy a house, it would not be prudent to only consider the listing price. We would want to know how much we're paying for each square foot. This sounds so simple, but feature engineering in this case involves just dividing sales price by square feet to identify the cheapest house.
+
+```{r}
+#| label: plot_sale
+options(scipen=10000)
+
+theme_set(theme_classic())
+ggplot(ames, aes(x=sale_price)) +
+  geom_histogram(fill = "#2A9D8F") + 
+  scale_x_continuous(labels=scales::dollar_format()) +
+  labs(
+    title = "Ames Housing Sale Price",
+    x = "Sale Price",
+    y = "Count"
+  ) +
+  theme(
+     plot.title = element_text(hjust = 0.5)
+  )
+```
+
+f we were in the neighborhood looking to buy a house, it would not be prudent to only consider the listing price. We would want to know how much we're paying for each square foot. This sounds so simple, but feature engineering in this case involves just dividing sales price by square feet to identify the cheapest house.
 
 ```{r cheapest}
 
 ames_fe <- ames |> 
   mutate(cost_sqft = sale_price/sq_ft)
 
-min = which(ames_fe$cost_sqft == min(ames_fe$cost_sqft), arr.ind = TRUE) 
 ames_fe |> 
+  arrange(cost_sqft) |> 
   kbl() |> 
   kable_styling() |> 
-  row_spec(min, bold = T, color = "black", background = "yellow")
+  row_spec(1, bold = T, color = "black", background = "yellow")
 ```
 
-In terms of ML feature learning is all about more accurately representing the relationship between your features.The [kaggle tutorial](https://www.kaggle.com/code/ryanholbrook/what-is-feature-engineering) on feature engineering has been really helpful understanding this through code. 
+```{r}
+#| label: cost_sqft plot
+
+theme_set(theme_classic())
+ggplot(ames_fe, aes(x=cost_sqft)) +
+  geom_histogram(fill = "#2A9D8F") + 
+  scale_x_continuous(labels=scales::dollar_format()) +
+  labs(
+    title = "Ames Housing Sale Price",
+    x = "Cost per Square Foot",
+    y = "Count"
+  ) +
+  theme(
+     plot.title = element_text(hjust = 0.5)
+  )
+
+```
+
+Based on our transformation, our distribution is almost perfectly normal.
+
+```{r ames2, include = FALSE}
+
+csf <- ames_fe |> 
+  select(id, cost_sqft)
+
+ames2 <- ames_raw |> 
+  left_join(csf, by = c("Id" = "id")) |> 
+  clean_names() |> 
+  select(-c(sale_price, garage_yr_blt)) |> 
+  select_if(is.numeric) |> 
+  mutate(across(everything(), ~replace_na(.,0)))
+
+```
+
+### Random Forest
+
+In terms of ML feature learning is all about more accurately representing the relationship between your features.The [kaggle tutorial](https://www.kaggle.com/code/ryanholbrook/what-is-feature-engineering) on feature engineering has been really helpful understanding this through code.
 
 ```{python ml}
+#| echo: true
+#| label: ml
+#| warning: false
+#| error: false
+
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
 
-ames = r.ames_raw
-ames = ames.drop()
+ames = r.ames2
+X = ames.iloc[:,:-1]
+y = ames.iloc[:,-1]
 
+# Train and score baseline model
+baseline = RandomForestRegressor(criterion="absolute_error", random_state=0)
+baseline_score = cross_val_score(
+    baseline, X, y, cv=5, scoring="neg_mean_absolute_error",
+    error_score='raise'
+)
+baseline_score = -1 * baseline_score.mean()
+
+print(f"MAE Baseline Score: {baseline_score:.4}")
 ```
 
+Looking at just the numeric variables, the MAE is not that bad. There are several variables that could be adjusted, added, or transformed to make them more useful. For example, there are variables for year built and year remodeled. By itself, year remodeled is odd in that new homes have year built as their remodeled year, and some older homes have decades between when they were built and when they were remodeled. Therefore, it might be better just to use the difference between year built and remodeled instead of just the remodeled year. Additionally, there are two variables for bedroom and total rooms, so we know they are already going to be highly correlated with each other. It might be more meaningful from a cost perspective to show the ratio of total rooms to bedrooms to avoid any duplication
+
+```{python}
+#| label: first transform
+
+
+
+
+```
