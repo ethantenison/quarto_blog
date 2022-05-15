@@ -15,14 +15,21 @@ library(reticulate)
 
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
-use_python("/usr/local/bin/python3")
+use_python("/Users/et/opt/miniconda3/bin/python")
+#virtualenv_create("r-reticulate")
+#virtualenv_install("r-reticulate", "pandas")
+#virtualenv_install("r-reticulate", "scikit-learn")
+#use_virtualenv("r-reticulate")
+#py_install("pandas")
+#pandas <- import("pandas")
+#sklearn <- import("sklearn")
 ```
 
 Improving ML models after they're already been built is fun and can lead to some immediate gratification. You might tweak the hyper parameters and cross validation to improve the generalizability of your model. You may switch out the algorithm itself. Lets say you move from using neural nets to gradient boosted trees to see if you can move the accuracy score even close to 99%. At a certain point though you won't be able to improve your model without over fitting. Often times, you need to take a step back and look at the raw data itself to see if new variables can be created from the old that lead to improvements. This is what's called feature engineering
 
 **Feature Engineering** is the process of selecting, manipulating, and transforming your data into features, or variables, that are useful for machine learning. Whereas data cleaning is generally the process of subtracting irrelevant data, feature engineering is a process of addition, adding more relevant information to your data set.
 
-### Simplification
+# Simplification
 
 Simplification is a major part of feature engineering. Combining two or more variables can increase the speed and accuracy of our model. Just to conceptualize what that would look like, I've pulled data from the [Ames Housing](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/) data set on Kaggle. It includes a variable for square footage and final sales prices.
 
@@ -106,7 +113,7 @@ ames2 <- ames_raw |>
 
 ```
 
-### Random Forest
+# Random Forest
 
 In terms of ML feature learning is all about more accurately representing the relationship between your features.The [kaggle tutorial](https://www.kaggle.com/code/ryanholbrook/what-is-feature-engineering) on feature engineering has been really helpful understanding this through code.
 
@@ -141,6 +148,23 @@ Looking at just the numeric variables, the MAE is not that bad. There are severa
 #| label: first transform
 
 
+#Difference between yrbuilt and remodeled
+X['dif_built_re'] = X['year_built'] - X['year_remod_add']
 
+# Ratio of bedrooms to total rooms
+X['bed2room_ratio'] = X['bedroom_abv_gr']/X['tot_rms_abv_grd']
 
+# Train and score updated baseline model
+baseline = RandomForestRegressor(criterion="absolute_error", random_state=0)
+baseline_score = cross_val_score(
+    baseline, X, y, cv=5, scoring="neg_mean_absolute_error",
+    error_score='raise'
+)
+baseline_score = -1 * baseline_score.mean()
+
+print(f"MAE Updated Baseline Score: {baseline_score:.4}")
 ```
+
+Creating these new variables only slightly improved the model. Oh well!
+
+# Mutual Information
