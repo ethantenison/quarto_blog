@@ -12,6 +12,69 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
 
   <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -99,8 +162,8 @@
 <div class="quarto-title-banner color-navbar page-columns page-full"><div class="quarto-title column-body"><h1 class="title display-7">Feature Engineering</h1><div class="quarto-categories"><div class="quarto-category">feature engineering</div><div class="quarto-category">analysis</div></div></div></div><div class="quarto-title-meta"><div><div class="quarto-title-meta-heading">Author</div><div class="quarto-title-meta-contents"><div class="quarto-title-authors"><p>Ethan Tenison</p></div></div></div><div><div class="quarto-title-meta-heading">Published</div><div class="quarto-title-meta-contents"><p class="date">April 26, 2022</p></div></div></div></header>
 <p>Improving ML models after they’re already been built is fun and can lead to some immediate gratification. You might tweak the hyper parameters and cross validation to improve the generalizability of your model. You may switch out the algorithm itself. Lets say you move from using neural nets to gradient boosted trees to see if you can move the accuracy score even close to 99%. At a certain point though you won’t be able to improve your model without over fitting. Often times, you need to take a step back and look at the raw data itself to see if new variables can be created from the old that lead to improvements. This is what’s called feature engineering</p>
 <p><strong>Feature Engineering</strong> is the process of selecting, manipulating, and transforming your data into features, or variables, that are useful for machine learning. Whereas data cleaning is generally the process of subtracting irrelevant data, feature engineering is a process of addition, adding more relevant information to your data set.</p>
-<section id="simplification" class="level3">
-<h3 class="anchored" data-anchor-id="simplification">Simplification</h3>
+<section id="simplification" class="level1">
+<h1>Simplification</h1>
 <p>Simplification is a major part of feature engineering. Combining two or more variables can increase the speed and accuracy of our model. Just to conceptualize what that would look like, I’ve pulled data from the <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/">Ames Housing</a> data set on Kaggle. It includes a variable for square footage and final sales prices.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -143,9 +206,34 @@
    <td style="text-align:right;"> 1362 </td>
    <td style="text-align:right;"> 143000 </td>
   </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 1694 </td>
+   <td style="text-align:right;"> 307000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 2090 </td>
+   <td style="text-align:right;"> 200000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 1774 </td>
+   <td style="text-align:right;"> 129900 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 1077 </td>
+   <td style="text-align:right;"> 118000 </td>
+  </tr>
 </tbody>
 </table>
 
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/plot_sale-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>If we were in the neighborhood looking to buy a house, it would not be prudent to only consider the listing price. We would want to know how much we’re paying for each square foot. This sounds so simple, but feature engineering in this case involves just dividing sales price by square feet to identify the cheapest house.</p>
@@ -162,47 +250,175 @@
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1710 </td>
-   <td style="text-align:right;"> 208500 </td>
-   <td style="text-align:right;"> 121.92982 </td>
+   <td style="text-align:right;font-weight: bold;color: black !important;background-color: yellow !important;"> 1299 </td>
+   <td style="text-align:right;font-weight: bold;color: black !important;background-color: yellow !important;"> 5642 </td>
+   <td style="text-align:right;font-weight: bold;color: black !important;background-color: yellow !important;"> 160000 </td>
+   <td style="text-align:right;font-weight: bold;color: black !important;background-color: yellow !important;"> 28.35874 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 1262 </td>
-   <td style="text-align:right;"> 181500 </td>
-   <td style="text-align:right;"> 143.81933 </td>
+   <td style="text-align:right;"> 31 </td>
+   <td style="text-align:right;"> 1317 </td>
+   <td style="text-align:right;"> 40000 </td>
+   <td style="text-align:right;"> 30.37206 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 1786 </td>
-   <td style="text-align:right;"> 223500 </td>
-   <td style="text-align:right;"> 125.13998 </td>
+   <td style="text-align:right;"> 1063 </td>
+   <td style="text-align:right;"> 2337 </td>
+   <td style="text-align:right;"> 90000 </td>
+   <td style="text-align:right;"> 38.51091 </td>
   </tr>
   <tr>
-   <td style="text-align:right;font-weight: bold;color: black !important;background-color: yellow !important;"> 4 </td>
-   <td style="text-align:right;font-weight: bold;color: black !important;background-color: yellow !important;"> 1717 </td>
-   <td style="text-align:right;font-weight: bold;color: black !important;background-color: yellow !important;"> 140000 </td>
-   <td style="text-align:right;font-weight: bold;color: black !important;background-color: yellow !important;"> 81.53757 </td>
+   <td style="text-align:right;"> 969 </td>
+   <td style="text-align:right;"> 968 </td>
+   <td style="text-align:right;"> 37900 </td>
+   <td style="text-align:right;"> 39.15289 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 2198 </td>
-   <td style="text-align:right;"> 250000 </td>
-   <td style="text-align:right;"> 113.73976 </td>
+   <td style="text-align:right;"> 524 </td>
+   <td style="text-align:right;"> 4676 </td>
+   <td style="text-align:right;"> 184750 </td>
+   <td style="text-align:right;"> 39.51027 </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 1362 </td>
-   <td style="text-align:right;"> 143000 </td>
-   <td style="text-align:right;"> 104.99266 </td>
+   <td style="text-align:right;"> 1293 </td>
+   <td style="text-align:right;"> 2372 </td>
+   <td style="text-align:right;"> 107500 </td>
+   <td style="text-align:right;"> 45.32040 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 199 </td>
+   <td style="text-align:right;"> 2229 </td>
+   <td style="text-align:right;"> 104000 </td>
+   <td style="text-align:right;"> 46.65769 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 411 </td>
+   <td style="text-align:right;"> 1276 </td>
+   <td style="text-align:right;"> 60000 </td>
+   <td style="text-align:right;"> 47.02194 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 496 </td>
+   <td style="text-align:right;"> 720 </td>
+   <td style="text-align:right;"> 34900 </td>
+   <td style="text-align:right;"> 48.47222 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 677 </td>
+   <td style="text-align:right;"> 1774 </td>
+   <td style="text-align:right;"> 87000 </td>
+   <td style="text-align:right;"> 49.04171 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 810 </td>
+   <td style="text-align:right;"> 2138 </td>
+   <td style="text-align:right;"> 106000 </td>
+   <td style="text-align:right;"> 49.57905 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 706 </td>
+   <td style="text-align:right;"> 1092 </td>
+   <td style="text-align:right;"> 55000 </td>
+   <td style="text-align:right;"> 50.36630 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1350 </td>
+   <td style="text-align:right;"> 2358 </td>
+   <td style="text-align:right;"> 122000 </td>
+   <td style="text-align:right;"> 51.73876 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 884 </td>
+   <td style="text-align:right;"> 2230 </td>
+   <td style="text-align:right;"> 118500 </td>
+   <td style="text-align:right;"> 53.13901 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1133 </td>
+   <td style="text-align:right;"> 2210 </td>
+   <td style="text-align:right;"> 117500 </td>
+   <td style="text-align:right;"> 53.16742 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1417 </td>
+   <td style="text-align:right;"> 2290 </td>
+   <td style="text-align:right;"> 122500 </td>
+   <td style="text-align:right;"> 53.49345 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 813 </td>
+   <td style="text-align:right;"> 1044 </td>
+   <td style="text-align:right;"> 55993 </td>
+   <td style="text-align:right;"> 53.63314 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1388 </td>
+   <td style="text-align:right;"> 2526 </td>
+   <td style="text-align:right;"> 136000 </td>
+   <td style="text-align:right;"> 53.84006 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 667 </td>
+   <td style="text-align:right;"> 2380 </td>
+   <td style="text-align:right;"> 129000 </td>
+   <td style="text-align:right;"> 54.20168 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 243 </td>
+   <td style="text-align:right;"> 1440 </td>
+   <td style="text-align:right;"> 79000 </td>
+   <td style="text-align:right;"> 54.86111 </td>
   </tr>
 </tbody>
 </table>
 
 </div>
 </div>
-<p>In terms of ML feature learning is all about more accurately representing the relationship between your features.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/cost_sqft%20plot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Based on our transformation, our distribution is almost perfectly normal.</p>
+</section>
+<section id="random-forest" class="level1">
+<h1>Random Forest</h1>
+<p>In terms of ML feature learning is all about more accurately representing the relationship between your features.The <a href="https://www.kaggle.com/code/ryanholbrook/what-is-feature-engineering">kaggle tutorial</a> on feature engineering has been really helpful understanding this through code.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ames <span class="op">=</span> r.ames2</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> ames.iloc[:,:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ames.iloc[:,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Train and score baseline model</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>baseline <span class="op">=</span> RandomForestRegressor(criterion<span class="op">=</span><span class="st">"absolute_error"</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>baseline_score <span class="op">=</span> cross_val_score(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    baseline, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_absolute_error"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    error_score<span class="op">=</span><span class="st">'raise'</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>baseline_score <span class="op">=</span> <span class="op">-</span><span class="dv">1</span> <span class="op">*</span> baseline_score.mean()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAE Baseline Score: </span><span class="sc">{</span>baseline_score<span class="sc">:.4}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code>MAE Baseline Score: 11.4</code></pre>
+</div>
+</div>
+<p>Looking at just the numeric variables, the MAE is not that bad. There are several variables that could be adjusted, added, or transformed to make them more useful. For example, there are variables for year built and year remodeled. By itself, year remodeled is odd in that new homes have year built as their remodeled year, and some older homes have decades between when they were built and when they were remodeled. Therefore, it might be better just to use the difference between year built and remodeled instead of just the remodeled year. Additionally, there are two variables for bedroom and total rooms, so we know they are already going to be highly correlated with each other. It might be more meaningful from a cost perspective to show the ratio of total rooms to bedrooms to avoid any duplication</p>
+<div class="cell">
+<div class="cell-output-stdout">
+<pre><code>MAE Updated Baseline Score: 11.38</code></pre>
+</div>
+</div>
+<p>Creating these new variables only slightly improved the model. Oh well!</p>
+</section>
+<section id="mutual-information" class="level1">
+<h1>Mutual Information</h1>
+<p>One of the common ways to gain an initial understanding of your data is to measure how different variables are correlated with each other, or rather how two variables are linearly related. This can be done with a correlation matrix of your dataset fairly easily, but what do you do when a non-linear relationship exist? This is where mutual information comes in.</p>
+<p><strong>Mutual Information</strong> is a measure that tells us how much one random variable tells us about another. [^1]</p>
+<p>[^1]: Latham, P. E. (2009, January 21). <em>Mutual information - Scholarpedia</em>. Scholarpedia. Retrieved May 22, 2022, from http://www.scholarpedia.org/article/Mutual_information]</p>
 
 
 </section>

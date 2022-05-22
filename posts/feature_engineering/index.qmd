@@ -43,6 +43,7 @@ ames <- ames_raw |>
   rename(sq_ft = gr_liv_area)
 
 ames |> 
+  head(10) |> 
   kbl() |> 
   kable_styling()
 ```
@@ -65,7 +66,7 @@ ggplot(ames, aes(x=sale_price)) +
   )
 ```
 
-f we were in the neighborhood looking to buy a house, it would not be prudent to only consider the listing price. We would want to know how much we're paying for each square foot. This sounds so simple, but feature engineering in this case involves just dividing sales price by square feet to identify the cheapest house.
+If we were in the neighborhood looking to buy a house, it would not be prudent to only consider the listing price. We would want to know how much we're paying for each square foot. This sounds so simple, but feature engineering in this case involves just dividing sales price by square feet to identify the cheapest house.
 
 ```{r cheapest}
 
@@ -74,9 +75,11 @@ ames_fe <- ames |>
 
 ames_fe |> 
   arrange(cost_sqft) |> 
+  head(10) |> 
   kbl() |> 
   kable_styling() |> 
   row_spec(1, bold = T, color = "black", background = "yellow")
+
 ```
 
 ```{r}
@@ -168,3 +171,9 @@ print(f"MAE Updated Baseline Score: {baseline_score:.4}")
 Creating these new variables only slightly improved the model. Oh well!
 
 # Mutual Information
+
+One of the common ways to gain an initial understanding of your data is to measure how different variables are correlated with each other, or rather how two variables are linearly related. This can be done with a correlation matrix of your dataset fairly easily, but what do you do when a non-linear relationship exist? This is where mutual information comes in.
+
+**Mutual Information** is a measure that tells us how much one random variable tells us about another. \[\^1\]
+
+\[\^1\]: Latham, P. E. (2009, January 21). *Mutual information - Scholarpedia*. Scholarpedia. Retrieved May 22, 2022, from http://www.scholarpedia.org/article/Mutual_information\]
