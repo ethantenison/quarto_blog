@@ -4,6 +4,7 @@ author: "Ethan Tenison"
 date: "4/26/2022"
 categories: [feature engineering, analysis]
 image: "image.jpg"
+bibliography: references.bib
 ---
 
 ```{r setup, include = FALSE}
@@ -172,8 +173,8 @@ Creating these new variables only slightly improved the model. Oh well!
 
 # Mutual Information
 
-One of the common ways to gain an initial understanding of your data is to measure how different variables are correlated with each other, or rather how two variables are linearly related. This can be done with a correlation matrix of your dataset fairly easily, but what do you do when a non-linear relationship exist? This is where mutual information comes in.
+One of the common ways to gain an initial understanding of your data is to measure how different variables are correlated with each other, or rather how two variables are linearly related. This can be done with a correlation matrix of your data set fairly easily, but what do you do when a non-linear relationship exist? This is where mutual information comes in.
 
-**Mutual Information** is a measure that tells us how much one random variable tells us about another. \[\^1\]
+**Mutual Information** is a measure that tells us how much one random variable tells us about the target variable. \[\^1\] In other words, it is a measure of uncertainty, or entropy, and it describes the relative potential of a feature as a predictor, considered by itself. MI scores are constructed on a logarithmic scale, with zero indicating predictor independence, and scores 2 and above indicating strong predictor dependence. One important consideration about MI is that it is a univariate measure, and it doesn't take into account interaction between predictors. For that reason, you still need to investigate interaction effects through EDA.
 
 \[\^1\]: Latham, P. E. (2009, January 21). *Mutual information - Scholarpedia*. Scholarpedia. Retrieved May 22, 2022, from http://www.scholarpedia.org/article/Mutual_information\]
