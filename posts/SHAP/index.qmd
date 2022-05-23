@@ -1,0 +1,10 @@
+---
+title: "Shap values and model interpretation"
+author: "Ethan Tenison"
+date: "4/26/2022"
+categories: [Machine Learning, Model Interpretation]
+image: "image.jpg"
+bibliography: references.bib
+---
+
+https://christophm.github.io/interpretable-ml-book/shapley.html
