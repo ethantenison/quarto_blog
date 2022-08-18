@@ -1,5 +1,5 @@
 ---
-title: "Tensor Tenison"
+title: "Ethan Tenison"
 listing:
   contents: posts
   sort: "date desc"

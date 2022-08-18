@@ -4,8 +4,9 @@ author: "Ethan Tenison"
 date: "4/26/2022"
 categories: [feature engineering, analysis]
 image: "image.jpg"
-bibliography: references.bib
 ---
+
+#bibliography: references.bib
 
 ```{r setup, include = FALSE}
 library(tidyverse)
