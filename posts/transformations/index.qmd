@@ -1,0 +1,12 @@
+---
+title: "Transforming your Data"
+author: "Ethan Tenison"
+editor: visual
+categories: [Feature Engineering]
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+Why is transforming your data important? Every model that you use operates under it's own constraints. For example, restrictive but interpretable models, like multiple linear regression, require your errors to follow a normal distribution and your predictors be linearly related to your reponse. In the real world this is rarely the case though. Most of the time there are several outliers in your data set which violate normality, and your predictors may be non-linearly related to your response. Many Without data transformation

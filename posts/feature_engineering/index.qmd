@@ -2,7 +2,7 @@
 title: "Feature Engineering"
 author: "Ethan Tenison"
 date: "4/26/2022"
-categories: [feature engineering, analysis]
+categories: [Feature Engineering, Analysis]
 image: "image.jpg"
 ---
 
